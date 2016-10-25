@@ -54,5 +54,5 @@ save_news($news);
 
 
 function format_news_HTML($title, $link, $content) {
-    return sprintf("%s\n%s\n<a href=\"%s\">link</a>", $title, $content, $link);
+    return sprintf("<b>%s</b>\n%s\n<a href=\"%s\">link</a>", $title, $content, $link);
 }
