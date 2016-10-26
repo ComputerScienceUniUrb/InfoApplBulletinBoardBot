@@ -34,3 +34,24 @@ function get_description($node){
 function get_content_encoded($node){
     return get_element_value($node, 'encoded');
 }
+
+function get_feed_news($url){
+    $doc = new DOMDocument();
+    $doc->load($url);
+
+    $xpath = new DOMXPath($doc);
+
+    $news = array();
+    $news_data = array();
+    foreach( $xpath->query( '//item') as $node){
+        // $node is DOMElement
+
+        $title = get_title($node);
+        //$pubDate = get_pubDate($node);
+        $link = get_link($node);
+
+        $news_data []= format_news_HTML($title, $link);
+        //echo format_news_HTML($title, $link, $content).PHP_EOL;
+    }
+    return $news_data;
+}

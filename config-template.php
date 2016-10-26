@@ -28,7 +28,8 @@ define('DATA_BASE_FILEPATH', '');
 define('DATA_DIRECTORY', '');
 
 /*  Feed constant */
-define('FEED_URL','');
+define('FEED_IT_URL','');
+define('FEED_EN_URL','');
 
 /* Settings constant */
 define('ADMIN_TELEGRAM_ID', 0);
