@@ -33,7 +33,7 @@ define('FEED_URL','');
 /* Settings constant */
 define('ADMIN_TELEGRAM_ID', 0);
 define('LIVE_CHANNEL_ID', '');
-define('DEBUG_TO_DB', false);
-define('DEBUG_TO_BOT', false);
+define('DEBUG_LIVE_CHANNEL_ID', '');
+define('DEBUG', false);
 
 ?>

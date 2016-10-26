@@ -121,4 +121,8 @@ function generate_qr_code_url($code) {
 }
 
 
+function get_live_channel_id(){
+    return DEBUG ? DEBUG_LIVE_CHANNEL_ID: LIVE_CHANNEL_ID;
+}
+
 ?>
