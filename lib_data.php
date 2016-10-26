@@ -42,13 +42,14 @@ function check_new_news($news) {
     $sanitized_old_news  = array_map("sanitize_data_entry", $old_news);
     $sanitized_news  = array_map("sanitize_data_entry", $news);
 
+    $new_news_keys = array();
     foreach ($sanitized_news as $key => $n){
         if(!in_array($n, $sanitized_old_news)){
-            return $key;
+            $new_news_keys[] = $key;
         }
     }
 
-    return false;
+    return $new_news_keys;
 }
 
 function sanitize_data_entry($entry) {

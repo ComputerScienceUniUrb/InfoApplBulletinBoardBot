@@ -34,20 +34,20 @@ foreach( $xpath->query( '//item') as $node){
     //echo format_news_HTML($title, $link, $content).PHP_EOL;
 }
 
-$new_idx = check_new_news($news);
+$new_idxs = check_new_news($news);
 
-if($new_idx === FALSE){
+if(count($new_idxs) === 0){
     echo "No new news!".PHP_EOL;
     exit(0);
 }
 
 echo "There is new news!".PHP_EOL;
-print_r($news_data[$new_idx]);
-echo PHP_EOL;
-
-//send news to live channel
-telegram_send_message(get_live_channel_id(), $news_data[$new_idx], array('parse_mode'=> "HTML"));
-
+foreach ($new_idxs as $new_idx) {
+    print_r($news_data[$new_idx]);
+    echo PHP_EOL;
+    //send news to live channel
+    telegram_send_message(get_live_channel_id(), $news_data[$new_idx], array('parse_mode' => "HTML"));
+}
 save_news($news);
 
 
