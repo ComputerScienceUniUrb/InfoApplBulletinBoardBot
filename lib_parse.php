@@ -37,11 +37,12 @@ function get_content_encoded($node){
 
 function get_feed_news($url){
     $doc = new DOMDocument();
-    $doc->load($url);
+    if($doc->load($url) === false){
+        die("Error loading feed");
+    }
 
     $xpath = new DOMXPath($doc);
 
-    $news = array();
     $news_data = array();
     foreach( $xpath->query( '//item') as $node){
         // $node is DOMElement
