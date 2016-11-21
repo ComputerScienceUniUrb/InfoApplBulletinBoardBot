@@ -60,6 +60,16 @@ function trim_response($text) {
 }
 
 /**
+ * Serches for the last occurence of the = char.
+ *
+ * @param string $text The string from which the guid needs to be extracted.
+ * @return string the GUID extracted.
+ */
+function extract_guid_number($text = '') {
+    return mb_substr($text,mb_strrpos($text, '=')+1);
+}
+
+/**
  * Hydrates a string value using a map of key/values.
  */
 function hydrate($text, $map = null) {

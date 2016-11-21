@@ -8,6 +8,7 @@
  */
 
 require_once('config.php');
+require_once('News.php');
 require_once('lib_utility.php');
 require_once('lib_parse.php');
 require_once('lib_data.php');

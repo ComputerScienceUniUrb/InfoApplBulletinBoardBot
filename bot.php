@@ -26,14 +26,14 @@ if(count($new_news) === 0){
     exit(0);
 }
 
-echo "There is new news!".PHP_EOL;
+echo "There are new news!".PHP_EOL;
 foreach ($new_news as $n) {
-    print_r($n);
-    echo PHP_EOL;
+    echo "($n->guid) ".$n->toHTML().PHP_EOL;
     //send news to live channel
-    telegram_send_message(get_live_channel_id(), $n, array('parse_mode' => "HTML"));
+    telegram_send_message(get_live_channel_id(), $n->toHTML(), array('parse_mode' => "HTML"));
 }
-save_news($news);
+
+save_news(News::toGUIDsArray($new_news));
 
 
 function format_news_HTML($title, $link) {

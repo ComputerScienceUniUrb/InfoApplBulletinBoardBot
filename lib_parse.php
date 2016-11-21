@@ -20,7 +20,7 @@ function get_title($node){
 }
 
 function get_pubDate($node){
-    return get_element_value($node, 'pubDate');
+    return new DateTime(get_element_value($node, 'pubDate'));
 }
 
 function get_link($node){
@@ -35,6 +35,10 @@ function get_content_encoded($node){
     return get_element_value($node, 'encoded');
 }
 
+function get_guid($node){
+    return extract_guid_number(get_element_value($node, 'guid'));
+}
+
 function get_feed_news($url){
     $doc = new DOMDocument();
     if($doc->load($url) === false){
@@ -43,16 +47,18 @@ function get_feed_news($url){
 
     $xpath = new DOMXPath($doc);
 
-    $news_data = array();
+    $news = array();
+
     foreach( $xpath->query( '//item') as $node){
+
         // $node is DOMElement
+        $nn = new News();
+        $nn->title = get_title($node);
+        $nn->pubDate = get_pubDate($node);
+        $nn->link = get_link($node);
+        $nn->guid = get_guid($node);
 
-        $title = get_title($node);
-        //$pubDate = get_pubDate($node);
-        $link = get_link($node);
-
-        $news_data []= format_news_HTML($title, $link);
-        //echo format_news_HTML($title, $link, $content).PHP_EOL;
+        $news []= $nn;
     }
-    return $news_data;
+    return $news;
 }

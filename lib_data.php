@@ -31,8 +31,13 @@ function read_saved_news() {
     return file(DATA_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 }
 
-function check_new_news($news) {
+function extract_guid_from_News(News $n){
+    return $n->guid;
+}
 
+function check_new_news($newsData) {
+
+    $news = News::toGUIDsArray($newsData);
     $old_news = read_saved_news();
 
     if($old_news === FALSE){
@@ -45,7 +50,7 @@ function check_new_news($news) {
     $new_news = array();
     foreach ($sanitized_news as $key => $n){
         if(!in_array($n, $sanitized_old_news)){
-            $new_news[] = $n;
+            $new_news[] = $newsData[$key];
         }
     }
 
