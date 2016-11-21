@@ -35,8 +35,5 @@ class News
             return array_map(array("News", "extractGUID"), $NewsArray);
     }
 
-    public static function toGUIDsArray2($NewsArray){
-        return array_map(function($n) {return $n->guid;}, $NewsArray);
-    }
 
 }
