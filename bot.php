@@ -21,21 +21,16 @@ $news = array_merge($news_it, $news_en);
 
 $new_news = check_new_news($news);
 
-if(count($new_news) === 0){
+if (count($new_news) === 0){
     echo "No new news!".PHP_EOL;
-    exit(0);
+} else {
+
+    echo "There are new news!" . PHP_EOL;
+    foreach ($new_news as $n) {
+        echo "($n->guid) " . $n->toHTML() . PHP_EOL;
+        //send news to live channel
+        telegram_send_message(get_live_channel_id(), $n->toHTML(), array('parse_mode' => "HTML"));
+    }
 }
 
-echo "There are new news!".PHP_EOL;
-foreach ($new_news as $n) {
-    echo "($n->guid) ".$n->toHTML().PHP_EOL;
-    //send news to live channel
-    telegram_send_message(get_live_channel_id(), $n->toHTML(), array('parse_mode' => "HTML"));
-}
-
-save_news(News::toGUIDsArray($new_news));
-
-
-function format_news_HTML($title, $link) {
-    return sprintf("<b>%s</b>\n<a href=\"%s\">link</a>", $title, $link);
-}
+save_news(News::toGUIDsArray($news));

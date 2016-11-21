@@ -35,9 +35,12 @@ function extract_guid_from_News(News $n){
     return $n->guid;
 }
 
-function check_new_news($newsData) {
+function check_new_news($news_data) {
 
-    $news = News::toGUIDsArray($newsData);
+    //filter out news older than 1 day.
+    $news_data = News::filterOutOldNewsArray_2($news_data);
+
+    $news = News::toGUIDsArray($news_data);
     $old_news = read_saved_news();
 
     if($old_news === FALSE){
@@ -50,7 +53,7 @@ function check_new_news($newsData) {
     $new_news = array();
     foreach ($sanitized_news as $key => $n){
         if(!in_array($n, $sanitized_old_news)){
-            $new_news[] = $newsData[$key];
+            $new_news[] = $news_data[$key];
         }
     }
 

@@ -19,11 +19,15 @@ class News
         return sprintf("<b>%s</b>\n<a href=\"%s\">link</a>", $this->title, $this->link);
     }
 
-    function isStillFresh(){
+    function isStillFresh(News $news = null){
+
+        $pd = is_null($news) ? $this->pubDate : $news->pubDate;
+
         $today = new DateTime();
-        $diff = $today->diff($today);
+        $diff = $today->diff($pd);
         $hours = $diff->h;
         $hours = $hours + ($diff->days*24);
+
         return $hours < 24;
     }
 
@@ -35,5 +39,17 @@ class News
             return array_map(array("News", "extractGUID"), $NewsArray);
     }
 
+    public static function filterOutOldNewsArray($news_array){
+        return array_filter($news_array, array("News", "isStillFresh"));
+    }
 
+    public static function filterOutOldNewsArray_2($news_array){
+        $news = array();
+        foreach ($news_array as $n) {
+           if($n->isStillFresh()){
+               $news[] = $n;
+           }
+        }
+        return $news;
+    }
 }
