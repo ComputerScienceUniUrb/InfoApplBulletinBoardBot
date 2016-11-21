@@ -7,6 +7,7 @@
  * Main file.
  *
  * SCHEDULE AS CRONJOB
+ * EXAMPLE: * * * * * php /var/www/public/infoappbb/bot.php>>/tmp/infoappbb/out.log
  */
 
 require_once('lib.php');
