@@ -40,10 +40,6 @@ class News
     }
 
     public static function filterOutOldNewsArray($news_array){
-        return array_filter($news_array, array("News", "isStillFresh"));
-    }
-
-    public static function filterOutOldNewsArray_2($news_array){
         $news = array();
         foreach ($news_array as $n) {
            if($n->isStillFresh()){
