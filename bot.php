@@ -15,10 +15,7 @@ require_once('lib.php');
 echo "Hello!".PHP_EOL;
 
 //check news
-$news_it = get_feed_news(FEED_IT_URL);
-$news_en = get_feed_news(FEED_EN_URL);
-
-$news = array_merge($news_it, $news_en);
+$news = get_feed_news(FEED_URL);
 
 $new_news = check_new_news($news);
 
