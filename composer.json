@@ -1,0 +1,14 @@
+{
+    "name": "dlpswr/info-appl-bulletin-board-bot",
+    "type": "project",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Saverio Delpriori",
+            "email": "saverio.delpriori@uniurb.it"
+        }
+    ],
+    "require": {
+        "nategood/commando": "*"
+    }
+}
