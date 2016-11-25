@@ -71,6 +71,15 @@ function get_options()
             return starts_with($channelID, "@") && strlen($channelID) > 5;
         });
 
+    // set help
+    $cmd->setHelp("This script fetches news from a feed and send them to a Telegram channel.".PHP_EOL.PHP_EOL.
+        "Mandatory parameters (bot's token, feed url and telegram channel ID)".PHP_EOL.
+        "could be provided as cli arguments like:".PHP_EOL.
+        "  $ php bot.php -f http://example.org -t BOT:TOKEN -c @channelID".PHP_EOL.
+        "(see below for more details about options)".PHP_EOL.
+        "or you can set each parameter in the config.php file and execute as:".PHP_EOL.
+        "  $ php bot.php".PHP_EOL);
+
     if(!defined('TELEGRAM_BOT_TOKEN')){ define('TELEGRAM_BOT_TOKEN', $cmd['token']); }
     if(!defined('FEED_URL')){ define('FEED_URL',$cmd['feed']); }
     if(!defined('LIVE_CHANNEL_ID')){ define('LIVE_CHANNEL_ID', $cmd['channel']); }
