@@ -9,39 +9,60 @@
 
 require_once('lib.php');
 
-function save_news($news){
+function get_news_file_path($feedurl){
+    //ex: data/9d8b137f4dd5e03530f69be30ea95bff-data.txt
+    return sprintf("%s/%s-data.txt", DATA_BASE_FILEPATH, md5($feedurl));
+}
 
-    if(!file_exists(DATA_FILE)){
-        $fh = fopen(DATA_FILE, 'a') or die("Cannot create file");
+function save_news($news, $feedurl){
+
+    $file_path = get_news_file_path($feedurl);
+    $file_path_info = pathinfo($file_path);
+    $file_path_dir = $file_path_info['dirname'];
+
+    if (!is_dir($file_path_dir)) {
+        mkdir($file_path_dir, 0777, true)
+            or die("Cannot create data directory {$file_path_dir}");
+    }
+
+    if(!file_exists($file_path)){
+        $fh = fopen($file_path, 'a') or die("Cannot create file {$file_path}");
         fwrite($fh, "\n");
         fclose($fh);
     }
 
+    if(!is_writeable($file_path)){
+        die("Cannot write file: {$file_path}");
+    }
+
     $sanitized_data  = array_map("sanitize_data_entry", $news);
 
-    $fh = fopen(DATA_FILE, 'w') or die("Cannot open file");
+    $fh = fopen($file_path, 'w') or die("Cannot open file ".$file_path);
     foreach ($sanitized_data as $entry){
-        fwrite($fh, $entry."\n") or die("Writing file error");
+        fwrite($fh, $entry."\n") or die("Writing file error ({$file_path})");
     }
     fclose($fh);
 
 }
 
-function read_saved_news() {
-    return file(DATA_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+function read_saved_news($feedurl) {
+
+    $file_path = get_news_file_path($feedurl);
+
+    return is_readable ($file_path)? file($file_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : array();
 }
 
 function extract_guid_from_News(News $n){
     return $n->guid;
 }
 
-function check_new_news($news_data) {
+function check_new_news($news_data, $feedurl) {
 
     //filter out news older than 1 day.
     $news_data = News::filterOutOldNewsArray($news_data);
 
     $news = News::toGUIDsArray($news_data);
-    $old_news = read_saved_news();
+    $old_news = read_saved_news($feedurl);
 
     if($old_news === FALSE){
         die("Reading file error");

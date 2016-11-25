@@ -38,3 +38,4 @@ fabric.properties
 /config.php
 /vendor/
 /composer.lock
+/data/*

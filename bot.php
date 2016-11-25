@@ -20,7 +20,7 @@ get_options();
 //check news
 $news = get_feed_news(FEED_URL);
 
-$new_news = check_new_news($news);
+$new_news = check_new_news($news, FEED_URL);
 
 if (count($new_news) === 0){
     echo "No new news!".PHP_EOL;
@@ -34,4 +34,4 @@ if (count($new_news) === 0){
     }
 }
 
-save_news(News::toGUIDsArray($news));
+save_news(News::toGUIDsArray($news), FEED_URL);
